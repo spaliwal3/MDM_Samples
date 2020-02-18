@@ -1,0 +1,548 @@
+@import "bootstrap";
+
+/**
+ * Import Fonts
+ *
+ */
+@font-face {
+	font-family: 'Open Sans';
+	src: '../font/open-sans/OpenSans-Regular.ttf';
+}
+@font-face {
+	font-family: 'Open Sans';
+	src: '../font/open-sans/OpenSans-Light.ttf';
+	font-weight: 300;
+}
+@font-face {
+	font-family: 'Open Sans';
+	src: '../font/open-sans/OpenSans-Semibold.ttf';
+	font-weight: 500;
+}
+@font-face {
+	font-family: 'Open Sans';
+	src: '../font/open-sans/OpenSans-Bold.ttf';
+	font-weight: 600;
+}
+
+
+/**
+ * All Variables
+ *
+ */
+$page-margin: 32px;
+$component-margin-s: 12px;
+$component-margin-l: 24px;
+$header-height: 240px;
+$plugin-font: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+/**
+ * Mixins Helper
+ *
+ */
+/* Truncate multiple line text */
+@mixin multiline-truncate($lines) {
+	display: -webkit-box;
+	-webkit-line-clamp: $lines;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+@mixin vertical-align {
+	position: relative;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+	-moz-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+/* truncate text */
+@mixin truncate {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+// Image Wrapper
+@mixin cr-img-wrap($radius: 0) {
+	position: relative;
+    text-align: center;
+    overflow: hidden;
+    border-radius: $radius;
+	img {
+		max-width: 100%;
+	    height: auto;
+	    width: auto\9;
+	    position: relative;
+	    top: 50%;
+	    -webkit-transform: translateY(-50%);
+	    -moz-transform: translateY(-50%);
+	    -ms-transform: translateY(-50%);
+	    transform: translateY(-50%);
+	}
+}
+@mixin hover-shadow-effect($offset, $depth) {
+	-webkit-transition: all 0.2s ease;
+	-moz-transition: all 0.2s ease;
+	-o-transition: all 0.2s ease;
+	transition: all 0.2s ease;
+	&:hover {
+		z-index:1000;
+		-webkit-box-shadow: 0 $offset $depth 0 rgba(0, 0, 0, 0.24), 0 0 $depth rgba(0, 0, 0, 0.12);
+		-moz-box-shadow: 0 $offset $depth 0 rgba(0, 0, 0, 0.24), 0 0 $depth rgba(0, 0, 0, 0.12);
+		box-shadow: 0 $offset $depth 0 rgba(0, 0, 0, 0.24), 0 0 $depth rgba(0, 0, 0, 0.12);
+	}
+}
+@mixin btn-primary($color) {
+	background-color: $color;
+	border: 0;
+	color: #fff;
+	letter-spacing: 0;
+	min-width: 60px;
+	@include hover-shadow-effect(2px,4px);
+
+	&:hover, &:active, &:visited, &:focus {
+		background-color: $color;
+		color: #fff;
+	}
+}
+@mixin btn-disabled {
+	background-color: #bbbbbb;
+	border: 0;
+	color: #666666;
+	letter-spacing: 0;
+
+	@include hover-shadow-effect(0,0);
+
+	&:hover, &:active, &:visited {
+		background-color: #bbbbbb;
+		color: #666666;
+	}
+}
+
+/**
+ * Global Classes
+ *
+ */
+ .cr-img-wrap {
+	position: relative;
+    text-align: center;
+    overflow: hidden;
+    &.circled {
+    	border-radius: 50%;
+    }
+	img {
+		object-fit: cover;
+		max-width: 100%;
+	    max-height: 100%;
+	    height: auto;
+	    width: auto\9;
+	    position: relative;
+	    top: 50%;
+	    -webkit-transform: translateY(-50%);
+	    -moz-transform: translateY(-50%);
+	    -ms-transform: translateY(-50%);
+	    transform: translateY(-50%);
+	}
+}
+.error.error {
+	color: $brand-danger;
+}
+.highlight {
+	&.highlight {
+		color: $brand-success;
+	}
+}
+
+/**
+ * Course List Page
+ *
+ */
+ .cr-course-page-header {
+ 	margin-top: $page-margin;
+ 	padding-top: $page-margin;
+ 	padding-bottom: $component-margin-l;
+ 	border-bottom: 1px solid #0b434d;
+ 	// background-color: $brand-primary;
+ 	.cr-course-page-title {
+ 		// color: #fff;
+ 	}
+ }
+.cr-course-list {
+	list-style: none;
+	padding-left: 0;
+	margin-top: $component-margin-l;
+}
+.cr-search-wrap {
+	display: block;
+	text-align: center;
+}
+.cr-search.cr-search {
+	display: inline-block;
+	position: relative;
+	width: 80%;
+	.cr-search-input {
+		padding-right: 64px;
+		height: 48px;
+		width: 100%;
+
+		line-height: 36px;
+		font-size: 18px;
+
+		border: 0;
+		box-shadow: none;
+	}	
+	.cr-btn-search {
+		position: absolute;
+		top: 0;
+		right: 15px;
+		height: 48px;
+		width: 64px;
+		text-align: center;
+		background-color: transparent;
+		border: 0;
+	}
+
+	@media (max-width: 768px) {
+		width: 90%;
+
+		.cr-btn-search {
+			top: 10px;
+		}
+	}
+}
+// Use Nested-class to ensure enough specification
+.cr-course-list-item {
+	margin-bottom: $component-margin-l * 2;
+	padding-top: $component-margin-l;
+	border-top: 1px solid rgba(0,0,0,0.12);
+
+	&:first-child {
+		border-top: 0;
+	}
+
+	.cr-course-list-item-thumb {
+		position: relative;
+		overflow: hidden;
+
+		height: 180px;
+		width: 100%;
+		@include cr-img-wrap(4px);
+
+		img {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			height: 100%;
+			width: auto;
+			-webkit-transform: translate(-50%,-50%);
+		        -ms-transform: translate(-50%,-50%);
+		            transform: translate(-50%,-50%);
+		}
+	}
+	.cr-course-list-item-date {
+		font-family: $plugin-font;
+		text-transform: uppercase;
+		@media (max-width: 768px) {
+			margin-top: $component-margin-l;
+		}
+	}
+	.cr-course-list-item-title {
+		font-family: $plugin-font;
+		text-align: left;
+	    font-weight: 600;
+	    font-size: 24px;
+	}
+	.cr-course-list-item-subtitle {
+		font-family: $plugin-font;
+		text-align: left;
+	    font-weight: 400;
+	    font-size: 14px;
+	    color: #999;
+	}
+	.cr-course-list-item-meta {
+		margin-top: $component-margin-s;
+
+		font-family: $plugin-font;
+		color: #999;
+		font-weight: 300;
+	}
+	.cr-course-list-item-desc {
+		margin-top: $component-margin-s;
+		padding: 0;
+
+		font-family: $plugin-font;
+		text-align: left;
+	    font-weight: 400;
+	    font-size: 14px;
+
+	    @include multiline-truncate(2);
+	}
+	.cr-course-list-item-instructor {
+		width: 36px;
+		height: 36px;
+		@include cr-img-wrap(50%);
+	}
+}
+
+
+/**
+ * Course Detail Page
+ *
+ */
+// Overall
+.cr-course-page {
+	margin-top: $page-margin;
+	margin-bottom: $page-margin;
+}
+.cr-panel {
+	&.cr-panel {
+		border-radius: 0;
+		box-shadow: none;
+	}
+	&.borderless {
+		border: 0;
+		background-color: #f8f8f8;
+	}
+	>.panel-heading.panel-heading {
+		background-color: transparent;
+		font-family: $plugin-font;
+		text-transform: uppercase;
+		h3 {
+			margin-top: 8px;
+			margin-bottom: 4px;
+			font-size: 18px;
+			font-weight: 600;
+		}
+	}
+}
+
+// Header
+.cr-course-header {
+	position: relative;
+	margin-bottom: $page-margin;
+
+	// height: $header-height;
+	width: 100%;
+
+	background-size: cover;
+	background-position: center;
+
+}
+// ------------------
+// Not in use
+// ------------------
+.cr-course-header-overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	
+	height: $header-height;
+	width: 100%;
+	
+	background-color: rgba(0,0,0,0.4);
+}
+.cr-course-header-info {
+	position: relative;
+	padding: 48px 12px 32px;
+	top: 0;
+	left: 0;
+
+	// height: $header-height;
+	width: 100%;
+
+	.cr-course-header-title {
+		color: #fff;
+		@include multiline-truncate(2);
+		font-size: 2.75em;
+	}
+	.cr-course-header-subtitle {
+		margin-bottom: 0;
+		color: #fff;
+		font-size: 16px;
+		@include multiline-truncate(1);
+	}
+	.cr-course-header-meta {
+		// position: absolute;
+		display: flex;
+		width: 100%;
+		justify-content: space-around;
+		padding-top: 24px;		
+		padding-left: 12px;
+		padding-right: 12px;
+		bottom: 12px;
+		color: #fff;
+
+		span {
+			flex: 1;
+			text-align: center;
+			&:first-child {
+				text-align: left;
+			}
+			&:last-child {
+				text-align: right;
+			}
+		}
+	}
+
+	@media (max-width: 768px) {
+		.cr-course-header-title {
+			font-size: 32px;
+		}
+		.cr-course-header-meta {
+			flex-direction: column;
+			span, span:first-child, span:last-child {
+				text-align: left;
+				padding-bottom: 6px;
+			}
+		}
+	}
+}
+// Course Description
+.cr-course-description-section {
+	.cr-course-description {
+		font-family: $plugin-font;
+			
+		p {
+			padding: 0;
+			text-align: left;
+
+			font-family: $plugin-font;
+			color: #333;
+			font-weight: 400;
+			line-height: 1.6;
+			font-size: 14px;
+		}
+	}
+}
+
+// Course Action Panel 
+.cr-course-action-control {
+	.cr-btn-register {
+		display: block;
+		padding: 0;
+		width: 100%;
+		height: 48px;
+		line-height: 50px;
+
+		@include btn-primary($brand-success);
+
+		&.disabled {
+			@include btn-disabled;
+		}
+	}
+	.cr-course-seat-info {
+		font-family: $plugin-font;
+		font-size: 14px;
+	}
+}
+// Course Organization & Instructor
+.cr-course-instructor {
+	.cr-img-wrap {
+		width: 80px;
+		height: 80px;
+	}
+}
+// Course Location and Date
+#map-course-location {
+	width: 100%;
+	height: 100%;
+	min-height: 200px;
+}
+.cr-course-location {
+	margin-top: 15px;
+	font-family: $plugin-font;
+	font-size: 14px;
+}
+.cr-course-date {
+	font-family: $plugin-font;
+	font-size: 14px;
+}
+
+/**
+ * Course Registration Page
+ *
+ */
+.cr-form-section {
+	.cr-form-section-header {
+		border-bottom: 1px solid rgba(0,0,0,0.12);
+		padding-bottom: $component-margin-s;
+	}
+	.cr-form-section-body {
+		margin-top: $component-margin-l;
+	}
+}
+.cr-application-form {
+	font-family: $plugin-font;
+	.cr-application-form-title {
+		font-size: 14px;
+
+	}
+	.cr-btn-complete-registration {
+		padding-top: 0;
+		padding-bottom: 0;
+		height: 48px;
+		line-height: 50px;
+
+		@include btn-primary($brand-success);
+	}
+
+	input[type=text], input[type=email], input[type=password], input[type=number], select {
+		height: 48px;
+		box-shadow: none;
+
+		&.error {
+			border: 1px solid $brand-danger;
+		}
+	}
+
+	fieldset:not(:last-of-type){
+		margin-bottom: 24px;
+	}
+	.control-label.control-label  {
+		padding-top: 12px;
+	}
+	.cr-btn-back-home {
+		padding-top: 0;
+		padding-bottom: 0;
+		height: 48px;
+		line-height: 50px;
+		@include btn-primary($brand-success);
+	}
+}
+.cr-cancel-form {
+	font-family: $plugin-font;
+	input[type=text], input[type=email], input[type=password], input[type=number], select {
+		height: 48px;
+		box-shadow: none;
+	}
+	.cr-cancel-form-title {
+		text-align: left;
+		font-size: 1em;
+		padding: 0;
+	}
+	.cr-btn-cancel-registration {
+		margin-top: 24px;
+		padding-top: 0;
+		padding-bottom: 0;
+		height: 48px;
+		line-height: 50px;
+
+		@include btn-primary($brand-danger);
+	}
+	.cr-btn-back-home {
+		padding-top: 0;
+		padding-bottom: 0;
+		height: 48px;
+		line-height: 50px;
+		@include btn-primary($brand-success);
+	}
+	.cr-btn-retry {
+		padding-top: 0;
+		padding-bottom: 0;
+		height: 48px;
+		line-height: 50px;
+		margin-right: 12px;
+		@include btn-primary($brand-warning);
+	}
+}
+
+
+

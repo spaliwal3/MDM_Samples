@@ -1,0 +1,12 @@
+1. Configuration local environment for WordPress running locally: PHP, mySQL, Apache
+MAC with MAMP: https://codex.wordpress.org/Installing_WordPress_Locally_on_Your_Mac_With_MAMP
+Windows could refer to the document: https://codex.wordpress.org/Installing_WordPress#Easy_5_Minute_WordPress_Installation_on_Windows
+2. Download the current source code of Georgia Trauma Foundation:
+use git to git clone the source code, we have already push it the bitbucket: https://bitbucket.org/cs6150/georgiatraumafoundation.org
+3. Dump mySQL database to local
+Login to host Site5
+phpMyAdmin => Export => Custom: display all possible option => Compress: zip => Go
+run wordpress locally => phpMyAdmin
+create database name as: “georgiat_gtf.sql” => import *.zip
+edit table wp_option in georgiat_gtf.sql: site_url ⇒ http://localhost; home ⇒ http://localhost
+update wp_config.php if needed
